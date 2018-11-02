@@ -12,9 +12,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	bool jump = false;
 
+    Animator animator; //Get the animator connected to the player.
+
 	// Use this for initialization
 	void Start () {
-		
+        animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -22,9 +24,18 @@ public class PlayerMovement : MonoBehaviour {
 
 		horizontalMove = Input.GetAxisRaw ("Horizontal") * runSpeed;
 
+        if (horizontalMove == 0) //Check if player isstanding still or moving and changes animation.
+        {
+            animator.SetBool("IsRunning", false);
+        } else
+        {
+            animator.SetBool("IsRunning", true);
+        }
+
 		if (Input.GetButtonDown ("Jump")) {
 			jump = true;
-		}
+            animator.SetTrigger("Jumps"); //Makes jump animation play.
+        }
 
 	}
 
